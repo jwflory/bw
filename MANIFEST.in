@@ -1,0 +1,9 @@
+# This file is used to include certain files and pieces of metadata in the
+# Python package. This file is useful to ensure basic documentation (i.e.
+# Markdown files) and the legal copytext (i.e. LICENSE.txt).
+
+# Include the README
+include *.md
+
+# Include the license file
+include LICENSE.txt
