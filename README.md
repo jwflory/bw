@@ -1,4 +1,4 @@
-metabrainz-wikibye
+metabrainz_wikibye
 ==================
 
 [![License: BSD 3-Clause License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
@@ -9,7 +9,7 @@ Python command-line tool to convert MusicBrainz MediaWiki pages to Markdown with
 
 ## About
 
-metabrainz-wikibye is a Python command-line tool to convert MusicBrainz MediaWiki pages to Markdown.
+metabrainz_wikibye is a Python command-line tool to convert MusicBrainz MediaWiki pages to Markdown.
 This facilitates an easier migration of existing documentation into a new documentation toolchain.
 Regardless of whatever tool or framework is chosen for a future docs solution, this tool enables migrating content.
 Instead of manually copy-pasting data, run a script to convert a large set of MusicBrainz MediaWiki URLs to plain Markdown files.
