@@ -4,10 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-requests = "*"
+requests = "~=2.23.0"
 
 [dev-packages]
+bye-wiki = {editable = true,path = "."}
 ipython = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.8"
