@@ -4,15 +4,15 @@ bye_wiki (bw)
 [![License: BSD 3-Clause License][1]][2]
 
 Say goodbye to your wikis!
-Python command-line tool to convert MediaWiki pages to Markdown with pandoc
+Python command-line wrapper to convert MediaWiki pages to other formats with `pandoc`
 
 
 ## About
 
-bye_wiki (`bw`) is a Python command-line script to convert MediaWiki pages into Markdown.
+bye_wiki (`bw`) is a Python command-line script to convert MediaWiki pages into other formats like AsciiDoc and Markdown.
 
-This makes migrating documentation and pages from a MediaWiki server to somewhere else.
-Regardless of whatever "somewhere else" means for you, this tool provides a basic Markdown conversion for you to work with in a new platform.
+This makes it easier to migrate documentation and wiki pages from a MediaWiki server to somewhere else.
+Regardless of whatever "somewhere else" means for you, this tool provides a basic conversion for you to work with the information from a new format.
 bye_wiki is more or less a fancy wrapper for `requests` and `pandoc`.
 
 
@@ -24,7 +24,7 @@ You must already have [pandoc][3] installed on your system for this script to wo
 Once you have `pandoc`, the easiest way to get started with bye_wiki is to install from PyPI:
 
 ```sh
-pip3 install --user bye-wiki
+pip install --user bye-wiki
 ```
 
 The CLI `--help` menu provides more detailed information about how to use bye_wiki.
@@ -40,23 +40,23 @@ bw --title "El Ten Eleven" --out ~/ete.md
 
 ### Example 2
 
-Convert _Licensing:Main_ from the [Fedora Project][4] MediaWiki to a Markdown document.
+Convert _Fedora_Linux_38_Release_Party_Schedule_ from the [Fedora Project][4] MediaWiki to an AsciiDoc document.
 
 ```sh
-bw --url fedoraproject.org/w --title "Licensing:Main" --out licensing.md
+bw --url fedoraproject.org/w --format asciidoc --title "Fedora_Linux_38_Release_Party_Schedule" --out licensing.adoc
 ```
 
 ### Example 3
 
-Convert _MusicBrainz Principles_ from the [MusicBrainz][5] MediaWiki to a Markdown document, with the `--atx` flag removed from `pandoc`:
+Convert _MusicBrainz Principles_ from the [MusicBrainz][5] MediaWiki to a Markdown document, with the `--markdown-headings=atx` flag excluded from the `pandoc` command:
 
 ```sh
 bw --url wiki.musicbrainz.org --title MusicBrainz_Principles --out mb-principles.md --atx-off
 ```
 
-Hint:
-If you aren't sure if you want `--atx-off` or not, you do not.
-It is an opinionated format for converting documents but some writers may prefer to not have ATX-style headers.
+_Hint_:
+If you are not sure whether you want `--atx-off` or not, you do not.
+ATX is the more popular format for Markdown documents, but some writers may prefer to not have ATX-style headers.
 
 
 ## How to contribute
@@ -73,4 +73,4 @@ Licensed under [BSD 3-Clause License][2].
 [3]: https://pandoc.org/
 [4]: https://getfedora.org
 [5]: https://musicbrainz.org
-[6]: https://github.com/jwflory/bw/blob/master/.github/CONTRIBUTING.md "How to contribute to the project"
+[6]: https://github.com/jwflory/bw/blob/main/.github/CONTRIBUTING.md "How to contribute to the project"
