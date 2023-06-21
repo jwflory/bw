@@ -29,6 +29,20 @@ def clean_request_data(payload) -> str:
     return payload[page_id]["revisions"][0]["*"]
 
 
+def convert_mediawiki_to_asciidoc(mw_content: str) -> str:
+    """Use pandoc via subprocess to convert temp. file to AsciiDoc raw text."""
+    pandoc_str = ["pandoc", "--from", "mediawiki", "--to", "asciidoc"]
+
+    mediawiki_doc = subprocess.Popen(
+        ("echo", mw_content),
+        stdout=subprocess.PIPE,
+    )
+    return str(
+        subprocess.check_output(pandoc_str, stdin=mediawiki_doc.stdout),
+        "utf-8",
+    )
+
+
 def convert_mediawiki_to_markdown(mw_content: str, atx_off: bool) -> str:
     """Use pandoc via subprocess to convert temp. file to Markdown raw text."""
     pandoc_str = ["pandoc", "--from", "mediawiki", "--to", "markdown"]
@@ -45,16 +59,16 @@ def convert_mediawiki_to_markdown(mw_content: str, atx_off: bool) -> str:
     )
 
 
-def save_file(out_path: str, markdown_doc: str):
-    """Save Markdown text to specified file path."""
+def save_file(out_path: str, converted_doc: str):
+    """Save converted text file to the specified file path."""
     with open(out_path, "w") as file:
-        file.write(str(markdown_doc))
+        file.write(str(converted_doc))
 
 
 def main():
     # Create main parser and subparser
     parser = argparse.ArgumentParser(
-        description="Convert MediaWiki pages to Markdown."
+        description="Convert MediaWiki pages to other formats."
     )
 
     parser.add_argument(
@@ -62,6 +76,14 @@ def main():
         default=False,
         help="(Markdown only) Do not convert with Pandoc --markdown-headings=atx flag",
         action="store_true",
+    )
+    parser.add_argument(
+        "-f",
+        "--format",
+        default="markdown",
+        help="Format of saved text file: asciidoc, markdown (default: markdown)",
+        metavar="FORMAT",
+        type=str,
     )
     parser.add_argument(
         "-i",
@@ -101,8 +123,15 @@ def main():
 
     raw_mw_content = get_mediawiki_content(args.insecure, args.url, args.title)
     mw_content = clean_request_data(raw_mw_content)
-    md_doc = convert_mediawiki_to_markdown(mw_content, args.atx_off)
-    save_file(args.out, md_doc)
+
+    if args.format == "asciidoc":
+        adoc_file = convert_mediawiki_to_asciidoc(mw_content)
+        save_file(args.out, adoc_file)
+    elif args.format == "markdown":
+        md_doc = convert_mediawiki_to_markdown(mw_content, args.atx_off)
+        save_file(args.out, md_doc)
+    else:
+        raise RuntimeError("An invalid export format was given.")
 
 
 if __name__ == "__main__":
