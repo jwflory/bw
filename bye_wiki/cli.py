@@ -31,9 +31,9 @@ def clean_request_data(payload) -> str:
 
 def convert_mediawiki_to_markdown(mw_content: str, atx_off: bool) -> str:
     """Use pandoc via subprocess to convert temp. file to Markdown raw text."""
-    pandoc_str = ["pandoc", "-f", "mediawiki", "-t", "markdown"]
+    pandoc_str = ["pandoc", "--from", "mediawiki", "--to", "markdown"]
     if atx_off is False:
-        pandoc_str.append("--atx")
+        pandoc_str.append("--markdown-headings=atx")
 
     mediawiki_doc = subprocess.Popen(
         ("echo", mw_content),
@@ -60,7 +60,7 @@ def main():
     parser.add_argument(
         "--atx-off",
         default=False,
-        help="Disable --atx flag on Pandoc conversion",
+        help="(Markdown only) Do not convert with Pandoc --markdown-headings=atx flag",
         action="store_true",
     )
     parser.add_argument(
